@@ -1,5 +1,6 @@
 [requires]
-oatpp/1.3.0
+drogon/1.7.5
 
 [generators]
 cmake
+CMakeToolchain
