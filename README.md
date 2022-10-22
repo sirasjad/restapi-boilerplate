@@ -1,5 +1,5 @@
 # restapi-boilerplate
-Boilerplate code for building a REST API skeleton using Oat++ Framework
+REST API boilerplate code using Drogon C++ HTTP Framework
 
 ## Build from source
 ```
