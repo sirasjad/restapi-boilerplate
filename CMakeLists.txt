@@ -12,10 +12,12 @@ include_directories(include)
 # Include source files
 set(SOURCES 
     src/test.cpp
+    src/service/MongoDbHandler.cpp
 )
 
 add_executable(restapi-boilerplate src/main.cpp ${SOURCES})
 
 target_link_libraries(restapi-boilerplate 
     CONAN_PKG::drogon
+    CONAN_PKG::mongo-cxx-driver
 )

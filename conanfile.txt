@@ -1,6 +1,9 @@
 [requires]
 drogon/1.7.5
+mongo-cxx-driver/3.6.7
+openssl/1.1.1q
 
 [generators]
 cmake
+#CMakeDeps
 CMakeToolchain
