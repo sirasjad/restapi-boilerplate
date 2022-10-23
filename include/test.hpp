@@ -1,4 +1,7 @@
 #pragma once
+
+// Drogon
+#include <drogon/drogon.h>
 #include <drogon/HttpController.h>
 
 namespace api::v1
