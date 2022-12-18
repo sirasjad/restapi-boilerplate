@@ -1,10 +1,10 @@
 #pragma once
 
-#include <iostream>
-#include <string>
+#include "Core.hpp"
 
 // MongoDB
 #include <bsoncxx/builder/stream/document.hpp>
+#include <bsoncxx/exception/exception.hpp>
 #include <bsoncxx/json.hpp>
 #include <bsoncxx/oid.hpp>
 #include <mongocxx/client.hpp>
@@ -12,16 +12,21 @@
 #include <mongocxx/database.hpp>
 #include <mongocxx/uri.hpp>
 
-namespace mongodb
+namespace Service
 {
     // temp variables
-    constexpr char kMongoDbUri[] = "insert_connectionstring_here";
-    constexpr char kDatabaseName[] = "db_name";
+    constexpr char kMongoDbUri[] = "";
+    constexpr char kDatabaseName[] = "teaffee";
 
-    class MongoDbHandler
+    class MongoDb
     {
     public:
-        MongoDbHandler();
+        MongoDb();
+        
+        void start();
+        void stop();
+
+        bool newDocument(const std::string& collectionName, const std::string& jsonDocument);
 
         bool AddCharacterToDb(const std::string& characterName, 
                               const std::string& size, const int& wins);

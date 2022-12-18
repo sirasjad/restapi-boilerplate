@@ -1,13 +1,48 @@
-#include "service/MongoDbHandler.hpp"
+#include "Service/MongoDb.hpp"
 
-mongodb::MongoDbHandler::MongoDbHandler()
+Service::MongoDb::MongoDb()
 {
+    // Set credentials
     this->uri = mongocxx::uri(kMongoDbUri);
     this->client = mongocxx::client(this->uri);
     this->db = this->client[kDatabaseName];
 }
 
-bool mongodb::MongoDbHandler::AddCharacterToDb(
+void Service::MongoDb::start()
+{
+    // Start MongoDB instance
+    mongocxx::instance instance;
+}
+
+void Service::MongoDb::stop()
+{
+    
+}
+
+bool Service::MongoDb::newDocument(
+    const std::string& collectionName,
+    const std::string& jsonDocument)
+{
+    try
+    {
+        mongocxx::collection collection = db[collectionName];
+        auto builder = bsoncxx::builder::stream::document{};
+
+        bsoncxx::document::value newDocument = bsoncxx::from_json(jsonDocument);
+        collection.insert_one(newDocument.view());
+
+        std::cout << "Added new document to collection: " << collectionName << '\n';
+        return true;
+    }
+    catch(bsoncxx::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+
+    return false;
+}
+
+bool Service::MongoDb::AddCharacterToDb(
     const std::string& characterName, 
     const std::string& size, const int& wins)
 {
@@ -27,7 +62,7 @@ bool mongodb::MongoDbHandler::AddCharacterToDb(
     return true;
 }
 
-bool mongodb::MongoDbHandler::UpdateWins(const std::string& characterId)
+bool Service::MongoDb::UpdateWins(const std::string& characterId)
 {
     mongocxx::collection collection = db["users"];
     auto builder = bsoncxx::builder::stream::document{};
@@ -59,7 +94,7 @@ bool mongodb::MongoDbHandler::UpdateWins(const std::string& characterId)
     else return false;
 }
 
-bool mongodb::MongoDbHandler::RemoveCharacterFromDb(const std::string& characterId)
+bool Service::MongoDb::RemoveCharacterFromDb(const std::string& characterId)
 {
     mongocxx::collection collection = db["users"];
     auto builder = bsoncxx::builder::stream::document{};
