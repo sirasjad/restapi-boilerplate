@@ -2,8 +2,8 @@
 drogon/1.7.5
 mongo-cxx-driver/3.6.7
 openssl/1.1.1q
+boost/1.80.0
 
 [generators]
 cmake
-#CMakeDeps
 CMakeToolchain
