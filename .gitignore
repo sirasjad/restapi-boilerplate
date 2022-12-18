@@ -2,3 +2,4 @@ build/*
 out/*
 .devcontainer/*
 .vscode/*
+.DS_Store

@@ -11,8 +11,9 @@ include_directories(include)
 
 # Include source files
 set(SOURCES 
-    src/test.cpp
-    src/service/MongoDbHandler.cpp
+    src/Service/HttpServer.cpp
+    src/Service/MongoDb.cpp
+    src/Endpoint/UserController.cpp
 )
 
 add_executable(restapi-boilerplate src/main.cpp ${SOURCES})
