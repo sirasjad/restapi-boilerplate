@@ -2,7 +2,9 @@
 
 #include "Core.hpp"
 
-// MongoDB
+#include <json/value.h>
+#include <boost/signals2.hpp>
+
 #include <bsoncxx/builder/stream/document.hpp>
 #include <bsoncxx/exception/exception.hpp>
 #include <bsoncxx/json.hpp>
@@ -16,7 +18,7 @@ namespace Service
 {
     // temp variables
     constexpr char kMongoDbUri[] = "";
-    constexpr char kDatabaseName[] = "teaffee";
+    constexpr char kDatabaseName[] = "";
 
     class MongoDb
     {
@@ -26,13 +28,20 @@ namespace Service
         void start();
         void stop();
 
-        bool newDocument(const std::string& collectionName, const std::string& jsonDocument);
+        bool newDocument(const std::string& collectionName, 
+                         const Json::Value& jsonDocument);
+
+        bool newDocument(const std::string& collectionName, 
+                         const std::string& jsonDocument);
 
         bool AddCharacterToDb(const std::string& characterName, 
                               const std::string& size, const int& wins);
 
         bool UpdateWins(const std::string& characterId);
         bool RemoveCharacterFromDb(const std::string& characterId);
+
+    public: // Slots
+        void onHttpServerStopped();
 
     private:
         mongocxx::uri uri;
