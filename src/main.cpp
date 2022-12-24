@@ -6,15 +6,12 @@
 int main(int argc, char **argv)
 {
     // Initialize services
-    std::shared_ptr<Service::MongoDb> mongoDbService = 
-        std::make_shared<Service::MongoDb>();
-
-    std::shared_ptr<Service::HttpServer> httpServerService = 
-        std::make_shared<Service::HttpServer>();
+    std::shared_ptr<Service::MongoDb> mongoDbService = std::make_shared<Service::MongoDb>();
+    std::shared_ptr<Service::HttpServer> httpServerService = std::make_shared<Service::HttpServer>();
 
     // Connect signals and slots
     httpServerService->serviceStopped.connect(
-        boost::bind(&Service::MongoDb::onHttpServerStopped, mongoDbService.get()));
+        boost::bind(&Service::MongoDb::onHttpServerStopped, mongoDbService));
     
     // Start services as async threads
     std::thread t_mongoDbService(&Service::MongoDb::start, mongoDbService);
