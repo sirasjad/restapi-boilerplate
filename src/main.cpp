@@ -12,7 +12,11 @@ int main(int argc, char **argv)
     std::shared_ptr<Service::HttpServer> httpServerService = 
         std::make_shared<Service::HttpServer>();
 
-    // Start services
+    // Connect signals and slots
+    httpServerService->serviceStopped.connect(
+        boost::bind(&Service::MongoDb::onHttpServerStopped, mongoDbService.get()));
+    
+    // Start services as async threads
     std::thread t_mongoDbService(&Service::MongoDb::start, mongoDbService);
     std::thread t_httpServerService(&Service::HttpServer::start, httpServerService);
 
@@ -27,12 +31,14 @@ int main(int argc, char **argv)
     jsonDocument["message"] = "Hello World!";
     jsonDocument["Age"] = 10;
     jsonDocument["Test"] = true;
-    std::string doc = jsonDocument.toStyledString();
 
-    mongoDbService->newDocument("products", doc);
+    mongoDbService->newDocument("products", jsonDocument);
     */
 
-    std::cout << "Press a key to exit";
+    // Test
+    httpServerService->stop();
+
+    std::cout << "Press a key to exit" << '\n';
     std::string tmp; std::getline(std::cin, tmp);
     
     return 0;
