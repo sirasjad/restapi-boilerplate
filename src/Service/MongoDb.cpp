@@ -21,6 +21,26 @@ void Service::MongoDb::stop()
 
 bool Service::MongoDb::newDocument(
     const std::string& collectionName,
+    const Json::Value& jsonDocument)
+{
+    try
+    {
+        // Convert from Json::Value to std::string
+        std::string document = jsonDocument.toStyledString();
+
+        // Call overloaded method
+        return this->newDocument(collectionName, document);
+    }
+    catch(Json::Exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+
+    return false;
+}
+
+bool Service::MongoDb::newDocument(
+    const std::string& collectionName,
     const std::string& jsonDocument)
 {
     try
@@ -117,4 +137,9 @@ bool Service::MongoDb::RemoveCharacterFromDb(const std::string& characterId)
         return result->deleted_count() == 1;
     }
     else return false;
+}
+
+void Service::MongoDb::onHttpServerStopped()
+{
+    std::cout << "Received signal in MongoDb object" << std::endl;
 }
