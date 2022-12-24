@@ -21,4 +21,5 @@ add_executable(restapi-boilerplate src/main.cpp ${SOURCES})
 target_link_libraries(restapi-boilerplate 
     CONAN_PKG::drogon
     CONAN_PKG::mongo-cxx-driver
+    CONAN_PKG::boost
 )
