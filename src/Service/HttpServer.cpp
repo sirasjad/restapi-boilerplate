@@ -2,7 +2,7 @@
 
 Service::HttpServer::HttpServer()
 {
-    // Connect signals and slots
+    // Connect internal signals and slots
     this->serviceStarted.connect(boost::bind(&Service::HttpServer::onHttpServerStarted, this));
     this->serviceStopped.connect(boost::bind(&Service::HttpServer::onHttpServerStopped, this));
 }
