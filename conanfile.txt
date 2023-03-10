@@ -1,6 +1,6 @@
 [requires]
 drogon/1.7.5
-mongo-cxx-driver/3.6.7
+mongo-cxx-driver/3.7.0
 boost/1.80.0
 openssl/1.1.1q
 
