@@ -4,6 +4,11 @@ mongo-cxx-driver/3.7.0
 boost/1.81.0
 #openssl/1.1.1q
 
+[options]
+drogon:shared=True
+mongo-cxx-driver:shared=True
+boost:shared=True
+
 [generators]
 cmake
 CMakeToolchain
