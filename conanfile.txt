@@ -1,8 +1,13 @@
 [requires]
-drogon/1.7.5
-mongo-cxx-driver/3.6.7
-boost/1.80.0
-openssl/1.1.1q
+drogon/1.8.3
+mongo-cxx-driver/3.7.0
+boost/1.81.0
+#openssl/1.1.1q
+
+[options]
+drogon:shared=True
+mongo-cxx-driver:shared=True
+boost:shared=True
 
 [generators]
 cmake
