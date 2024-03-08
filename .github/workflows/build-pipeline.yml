@@ -5,16 +5,20 @@ on:
     branches: [ main ]
 
 env:
-  BUILD_TYPE: Debug
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
 
 jobs:
-  build_linux:
-    name: "Linux Build (Debug)"
-    runs-on: ubuntu-latest
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        build_type: [Debug, Release]
+
+    name: "Linux build (${{ matrix.build_type }})"
+    runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4.1.1  
+      uses: actions/checkout@v4.1.1
 
     - name: Configure vcpkg
       run: |
@@ -26,13 +30,4 @@ jobs:
 
     - name: Build project
       working-directory: ${{github.workspace}}/build
-      run: cmake --build . --config ${{env.BUILD_TYPE}}
-
-  build_windows:
-    name: "Windows Build (Debug)"
-    runs-on: windows-latest
-    steps:
-    - name: Configure vcpkg
-      run: |
-        git clone https://github.com/microsoft/vcpkg.git
-        cd vcpkg && ./bootstrap-vcpkg.sh
+      run: cmake --build . --config ${{ matrix.build_type }}
