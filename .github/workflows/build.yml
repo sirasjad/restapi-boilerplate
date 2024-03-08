@@ -13,16 +13,17 @@ jobs:
     name: "Build source code"
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v4.1.1  
 
     - name: Configure vcpkg
       run: |
         git clone https://github.com/microsoft/vcpkg.git
         cd vcpkg && ./bootstrap-vcpkg.sh
 
-    - name: Configure the build using CMake
+    - name: Configure build and install packages
       run: cmake --preset=default
 
-    - name: Build the project
+    - name: Build project
       working-directory: ${{github.workspace}}/build
       run: cmake --build . --config ${{env.BUILD_TYPE}}
