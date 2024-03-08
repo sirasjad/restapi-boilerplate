@@ -3,3 +3,4 @@ out/*
 .devcontainer/*
 .vscode/*
 .DS_Store
+vcpkg-configuration.json
