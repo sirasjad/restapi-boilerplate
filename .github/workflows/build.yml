@@ -6,6 +6,7 @@ on:
 
 env:
   BUILD_TYPE: Debug
+  VCPKG_ROOT: ${{github.workspace}}/vcpkg
 
 jobs:
   build:
@@ -18,11 +19,6 @@ jobs:
       run: |
         git clone https://github.com/microsoft/vcpkg.git
         cd vcpkg && ./bootstrap-vcpkg.sh
-
-    - name: Configure the VCPKG_ROOT environment variable
-      run: |
-        export VCPKG_ROOT=${{github.workspace}}/vcpkg
-        export PATH=$VCPKG_ROOT:$PATH
 
     - name: Configure the build using CMake
       run: cmake --preset=default
