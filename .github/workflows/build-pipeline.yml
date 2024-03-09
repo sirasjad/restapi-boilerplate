@@ -8,7 +8,7 @@ jobs:
   build_job:
     name: >-
       ${{ matrix.os == 'ubuntu-latest' && 'Ubuntu' || matrix.os == 'windows-latest' && 'Windows' }} 
-      ${{ matrix.arch }} build (${{ matrix.build_type }})
+      ${{ matrix.arch }} target (${{ matrix.build_type }})
 
     strategy:
       matrix:
