@@ -4,9 +4,6 @@ on:
   pull_request:
     branches: [ main ]
 
-env:
-  VCPKG_ROOT: ${{github.workspace}}/vcpkg
-
 jobs:
   build_job:
     name: >-
@@ -28,8 +25,8 @@ jobs:
       uses: actions/cache@v3
       with:
         path: |
-          ${{github.workspace}}/vcpkg/installed
-          !${{github.workspace}}/vcpkg/installed/vcpkg/status
+          ${{github.workspace}}/build/vcpkg_installed
+          !${{github.workspace}}/build/vcpkg_installed/vcpkg/status
         key: ${{ runner.os }}-vcpkg-${{ hashFiles('**/vcpkg.json', '**/.gitmodules') }}
         restore-keys: |
           ${{ runner.os }}-vcpkg-
@@ -41,6 +38,8 @@ jobs:
 
     - name: Configure build and install packages
       run: cmake --preset=default
+      env:
+        VCPKG_ROOT: ${{github.workspace}}/vcpkg
 
     - name: Build project
       working-directory: ${{github.workspace}}/build
