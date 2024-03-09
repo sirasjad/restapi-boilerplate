@@ -24,6 +24,16 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4.1.1
 
+    - name: Cache vcpkg packages
+      uses: actions/cache@v3
+      with:
+        path: |
+          ${{github.workspace}}/vcpkg/installed
+          !${{github.workspace}}/vcpkg/installed/vcpkg/status
+        key: ${{ runner.os }}-vcpkg-${{ hashFiles('**/vcpkg.json', '**/.gitmodules') }}
+        restore-keys: |
+          ${{ runner.os }}-vcpkg-
+
     - name: Configure vcpkg
       run: |
         git clone https://github.com/microsoft/vcpkg.git
