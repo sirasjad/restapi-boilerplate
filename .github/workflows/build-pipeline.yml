@@ -8,13 +8,13 @@ env:
   VCPKG_ROOT: ${{github.workspace}}/vcpkg
 
 jobs:
-  build:
+  build_job:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
         build_type: [Debug, Release]
 
-    name: "Linux build (${{ matrix.build_type }})"
+    name: "${{ matrix.os }} build (${{ matrix.build_type }})"
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout repository
