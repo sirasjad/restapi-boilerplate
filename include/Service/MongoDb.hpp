@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core.hpp"
+#include "core.hpp"
 
 #include <json/value.h>
 #include <boost/signals2.hpp>
