@@ -9,12 +9,16 @@ env:
 
 jobs:
   build_job:
+    name: >-
+      ${{ matrix.os == 'ubuntu-latest' && 'Ubuntu' || matrix.os == 'windows-latest' && 'Windows' }} 
+      ${{ matrix.arch }} build (${{ matrix.build_type }})
+
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
         build_type: [Debug, Release]
+        os: [ubuntu-latest, windows-latest]
+        arch: [x64]
 
-    name: "${{ matrix.os == 'ubuntu-latest' && 'Ubuntu' || matrix.os == 'windows-latest' && 'Windows' }} build (${{ matrix.build_type }})"
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout repository
