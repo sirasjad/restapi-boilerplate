@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core.hpp"
+
 // Drogon
 #include <drogon/drogon.h>
 
@@ -13,8 +15,8 @@ namespace Service
     public:
         HttpServer();
         
-        void start();
-        void stop();
+        EXPORT_PUBLIC void start();
+        EXPORT_PUBLIC void stop();
 
     public: // Signals
         boost::signals2::signal<void()> serviceStarted;

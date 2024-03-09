@@ -1,5 +1,5 @@
 # restapi-boilerplate
-REST API boilerplate code using Drogon C++ HTTP Framework
+In development. REST API boilerplate code using Drogon C++ HTTP Framework
 
 ## Build from source
 ```

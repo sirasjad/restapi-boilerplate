@@ -1,0 +1,46 @@
+name: "Build project and run unit tests"
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build_job:
+    name: >-
+      ${{ matrix.os == 'ubuntu-latest' && 'Ubuntu' || matrix.os == 'windows-latest' && 'Windows' }} 
+      ${{ matrix.arch }} target (${{ matrix.build_type }})
+
+    strategy:
+      matrix:
+        build_type: [Debug, Release]
+        os: [ubuntu-latest, windows-latest]
+        arch: [x64]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4.1.1
+
+    - name: Cache vcpkg packages
+      uses: actions/cache@v3
+      with:
+        path: |
+          ${{github.workspace}}/build/vcpkg_installed
+          !${{github.workspace}}/build/vcpkg_installed/vcpkg/status
+        key: ${{ runner.os }}-vcpkg-${{ hashFiles('**/vcpkg.json', '**/.gitmodules') }}
+        restore-keys: |
+          ${{ runner.os }}-vcpkg-
+
+    - name: Configure vcpkg
+      run: |
+        git clone https://github.com/microsoft/vcpkg.git
+        cd vcpkg && ./bootstrap-vcpkg.sh
+
+    - name: Configure build and install packages
+      run: cmake --preset=default
+      env:
+        VCPKG_ROOT: ${{github.workspace}}/vcpkg
+
+    - name: Build project
+      working-directory: ${{github.workspace}}/build
+      run: cmake --build . --config ${{ matrix.build_type }}
